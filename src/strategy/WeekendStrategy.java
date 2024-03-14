@@ -2,6 +2,7 @@ package strategy;
 
 import java.util.Scanner;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public enum WeekendStrategy {
     Monday("1",i->"Monday"),
@@ -16,7 +17,7 @@ public enum WeekendStrategy {
     private final String name;
     private final Function<String,String> function;
 
-    public WeekendStrategy(String name, Function<String, String> function) {
+    WeekendStrategy(String name, Function<String, String> function) {
         this.name = name;
         this.function = function;
     }
@@ -24,7 +25,10 @@ public enum WeekendStrategy {
     public static String excute(Scanner sc) {
         System.out.println("1~7 입력 : ");
         String s = sc.next();
-        return Stream.of(valueof())
+        return Stream.of(values())
+                .filter(i->i.name.equals(s))
+                .findAny().orElseGet(()->Wrong)
+                .function.apply(s)
                 ;
     }
 }

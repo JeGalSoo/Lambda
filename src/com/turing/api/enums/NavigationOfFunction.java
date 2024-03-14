@@ -1,8 +1,6 @@
 package com.turing.api.enums;
 
-import com.turing.api.account.Account;
 import com.turing.api.account.AccountView;
-import com.turing.api.board.BoardView;
 import com.turing.api.crawler.CrawlerView;
 
 import java.io.IOException;
@@ -15,21 +13,17 @@ public enum NavigationOfFunction {
         while(UserRouterPredicate.getOperator(i));
         return "True";
     }),
-//    board("b", i -> {
-//        while(BoardView.main());
-//        return "true";
-//    }),
+    review("r", i -> {
+        ReViewRouter.select(i);
+        return "true";
+    }),
     account("a", i -> {
         while(AccountView.main(i));
         return "true";
     }),
     crawler("c", i -> {
         while(true) {
-            try {
-                if (!CrawlerView.main(i)) break;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            if (!CrawlerRouter.select(i)) break;
             ;
         }
         return "true";

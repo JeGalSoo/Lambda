@@ -6,14 +6,15 @@ public class Weekend {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        execute(sc);
-        String day = WeekendStrategy.excute(sc);
-
+//        execute(sc);
+//        String day = WeekendStrategy.excute(sc);
+            System.out.println(WeekendStrategy.excute(sc));
     }
 
     private static void execute(Scanner sc) {
         System.out.println("1~7 입력: ");
         String day = sc.next();
+        System.out.println("전략의 결과 : "+day);
         String res = "";
         switch (day) {
             case "1":
