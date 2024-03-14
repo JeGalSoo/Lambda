@@ -3,31 +3,30 @@ package com.turing.api.enums;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-
-public enum Menus {
+public enum NavigationOfPredicate {
     user("u", i -> {
-        while(UserRouter.getOperator(i));
-        return TRUE;
+        while(UserRouterPredicate.getOperator(i));
+        return true;
     }),
-    exit("x", i->{return FALSE;})
+    exit("x", i->{return false;})
     ;
     private final String menu;
-    private final Function<Scanner,Boolean> function;
+    private final Predicate<Scanner> predicate;
 
-    Menus(String menu, Function<Scanner,Boolean> function) {
+    NavigationOfPredicate(String menu, Predicate<Scanner> predicate) {
         this.menu = menu;
-        this.function = function;
+        this.predicate = predicate;
     }
-    public static boolean getOperator(Scanner sc) {
+
+    public static Boolean select(Scanner sc) {
         String a = sc.next();
         while (true) {
             return Arrays.stream(values())
                     .filter(i -> i.menu.equals(a))
                     .findFirst().orElseThrow(() -> new IllegalArgumentException("error"))
-                    .function.apply(sc);
+                    .predicate.test(sc);
         }
     }
 }

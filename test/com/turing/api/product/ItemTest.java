@@ -12,7 +12,7 @@ class ItemTest {
         String s3 = s.systemOut();
         System.out.println("-->"+s3);
         String s2 = "Hello";
-        Assertions.assertEquals(s.systemOut(),"Hello");
+        Assertions.assertEquals(s.systemOut(),"s2");
     }
 
     @org.junit.jupiter.api.Test

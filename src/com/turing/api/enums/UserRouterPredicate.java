@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Function;
 
-public enum UserRouter {
+public enum UserRouterPredicate {
     exit("e",i-> {
         return false;
     }),
@@ -70,7 +70,7 @@ public enum UserRouter {
     private final String num;
     private final Function<Scanner, Boolean> function;
 
-    UserRouter(String num, Function<Scanner,Boolean> predicate) {
+    UserRouterPredicate(String num, Function<Scanner,Boolean> predicate) {
         this.num = num;
         this.function = predicate;
     }

@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class CrawlerView {
-    public static void main(Scanner scanner) throws IOException {
+    public static boolean main(Scanner scanner) throws IOException {
         CrawlerController controller = new CrawlerController();
         while(true){
             System.out.println("[사용자메뉴] 0-종료\n " +
@@ -23,7 +23,8 @@ public class CrawlerView {
                     "9-회원수");
             switch (scanner.next()){
                 case "0":
-                    System.out.println("종료");return;
+                    System.out.println("종료");
+                    return false;
                 case "1":
                     System.out.println("1-벅스뮤직");
                     Map<String, ?> map = controller.findBugsMusic(scanner);

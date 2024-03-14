@@ -3,13 +3,13 @@ package com.turing.api.account;
 import java.util.Scanner;
 
 public class AccountView {
-    public static void main(Scanner sc) {
+    public static boolean main(Scanner sc) {
         AccountController accountController = new AccountController();
         while(true){
             System.out.println("[Account] 0-Exit 1-Create 2-Deposit " +
                     "3-Withdraw 4-Balance 5-Remove 6-Account List");
             switch (sc.next()){
-                case "0": return;
+                case "0": return false;
                 case "1":
                     System.out.println("Create Account");
                     System.out.println(accountController.createAccount(sc));
