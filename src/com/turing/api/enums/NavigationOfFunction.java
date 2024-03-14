@@ -2,15 +2,32 @@ package com.turing.api.enums;
 
 import com.turing.api.account.AccountView;
 import com.turing.api.crawler.CrawlerView;
+import com.turing.api.menu.MenuRouter;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Function;
 
 public enum NavigationOfFunction {
+//    category("m", i -> {
+//        try {
+//            System.out.println(MenuRouter.main(i));
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return "true";
+//    }),
     user("u", i -> {
-        while(UserRouterPredicate.getOperator(i));
+        while(true) {
+            try {
+                if (!UserRouterPredicate.getOperator(i)) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            ;
+        }
         return "True";
     }),
     review("r", i -> {

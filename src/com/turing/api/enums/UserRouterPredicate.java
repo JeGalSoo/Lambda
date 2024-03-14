@@ -1,5 +1,6 @@
 package com.turing.api.enums;
 
+import com.turing.api.menu.MenuController;
 import com.turing.api.user.UserController;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -74,14 +75,8 @@ public enum UserRouterPredicate {
         this.num = num;
         this.function = predicate;
     }
-    public static boolean getOperator(Scanner sc){
-        System.out.println("t-create table\n" +
-                "r-drop table\n" +
-                "c-find users\n" +
-                "s-join\n" +
-                "q-count users\n" +
-                "l-login\n" +
-                "f-find username");
+    public static boolean getOperator(Scanner sc) throws SQLException {
+        System.out.println(MenuController.munu("menus"));;
         String a=sc.next();
             return Arrays.stream(values())
                     .filter(i -> i.num.equals(a))

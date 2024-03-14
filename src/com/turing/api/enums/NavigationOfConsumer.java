@@ -1,5 +1,6 @@
 package com.turing.api.enums;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Consumer;
@@ -7,7 +8,14 @@ import java.util.function.Function;
 
 public enum NavigationOfConsumer {
     user("u", i -> {
-        while(UserRouterPredicate.getOperator(i));
+        while(true) {
+            try {
+                if (!UserRouterPredicate.getOperator(i)) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            ;
+        }
         return ;
     }),
     exit("x", i->{return ;})
