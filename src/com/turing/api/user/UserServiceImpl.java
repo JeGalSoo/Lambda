@@ -24,8 +24,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     public static UserServiceImpl getInstance(){return instance;}
     @Override
     public Messenger save1(User user) throws SQLException {
-        lusers.add(user);
-    return ur.save1(lusers);
+        //lusers.add(user);
+        return ur.save1(user);
     }
 
     @Override
@@ -70,6 +70,11 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     public String delete(User user) {
         users.remove(user.getUsername());
         return "회원삭제";
+    }
+
+    @Override
+    public Boolean existsById(long l) {
+        return null;
     }
 
     @Override

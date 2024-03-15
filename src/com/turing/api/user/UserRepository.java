@@ -71,18 +71,18 @@ public class UserRepository {
         return null;
     }
 
-    public Messenger  save1(List<User> users) throws SQLException {
+    public Messenger  save1(User users) throws SQLException {
         String sql = "INSERT INTO users (username, password, name, phone_number, " +
                 " job, height, weight)" +
                 "VALUES (?, ?, ?, ?, ?, ?,?)";
         PreparedStatement pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1,users.get(0).getUsername());
-        pstmt.setString(2,users.get(0).getPassword());
-        pstmt.setString(3,users.get(0).getName());
-        pstmt.setString(4,users.get(0).getPhoneNumber());
-        pstmt.setString(5,users.get(0).getJob());
-        pstmt.setDouble(6,users.get(0).getHeight());
-        pstmt.setDouble(7,users.get(0).getWeight());
+        pstmt.setString(1,users.getUsername());
+        pstmt.setString(2,users.getPassword());
+        pstmt.setString(3,users.getName());
+        pstmt.setString(4,users.getPhoneNumber());
+        pstmt.setString(5,users.getJob());
+        pstmt.setDouble(6,users.getHeight());
+        pstmt.setDouble(7,users.getWeight());
         return (pstmt.executeUpdate() == 0) ? Messenger.SUCCESS: Messenger.FAIL;
     }
 
@@ -104,7 +104,7 @@ public class UserRepository {
     public Messenger rm() throws SQLException {
         String sql = "DROP TABLE users;";
 
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+        PreparedStatement pstmt = connection.prepareStatement(sql);
         return (pstmt.executeUpdate() == 0) ? Messenger.SUCCESS: Messenger.FAIL;
 
     }
@@ -127,11 +127,11 @@ public class UserRepository {
                             .build());
                 } while (rs.next());
             }else{
-                    System.out.println("데이터가 없습니다.");
-                }
-                rs.close();
-                pstmt.close();
-            } catch(Exception e){
+                System.out.println("데이터가 없습니다.");
+            }
+            rs.close();
+            pstmt.close();
+        } catch(Exception e){
             System.out.println("You have the table");
             return list;
         }

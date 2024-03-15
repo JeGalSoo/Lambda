@@ -19,7 +19,7 @@ public class UserController {
     public Messenger rm() throws SQLException {
         return service.rm();
     }
-    UserServiceImpl service;
+    UserService service;
 
     public UserController() {
         this.service = UserServiceImpl.getInstance();
@@ -40,8 +40,8 @@ public class UserController {
                 .name(scanner.next())
                 .phoneNumber(scanner.next())
                 .job(scanner.next())
-                        .height(scanner.nextDouble())
-                        .weight(scanner.nextInt())
+                .height(scanner.nextDouble())
+                .weight(scanner.nextInt())
                 .build());
     }
 

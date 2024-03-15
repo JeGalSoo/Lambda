@@ -2,16 +2,19 @@ package com.turing.api.enums;
 
 import com.turing.api.menu.MenuController;
 import com.turing.api.user.UserController;
+import org.w3c.dom.ls.LSOutput;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public enum UserRouterPredicate {
-    exit("e",i-> {
+    exit("x",i-> {
         return false;
     }),
-    find_id("fi",i-> {
+    find_id("cat",i-> {
         try {
             System.out.println(UserController.getInstance().findUsername(i));
         } catch (SQLException e) {
@@ -19,7 +22,7 @@ public enum UserRouterPredicate {
         }
         return true;
     }),
-    count("co",i-> {
+    count("cnt",i-> {
         try {
             System.out.println(UserController.getInstance().count());
         } catch (SQLException e) {
@@ -27,7 +30,7 @@ public enum UserRouterPredicate {
         }
         return true;
     }),
-    save("sa",i-> {
+    save("joi",i-> {
         try {
             System.out.println(UserController.getInstance().save1(i));
             return true;
@@ -35,7 +38,7 @@ public enum UserRouterPredicate {
             throw new RuntimeException(e);
         }
     }),
-    login("lo",i-> {
+    login("log",i-> {
         try {
             System.out.println(UserController.getInstance().login(i));
         } catch (SQLException e) {
@@ -43,7 +46,7 @@ public enum UserRouterPredicate {
         }
         return true;
     }),
-    touch("t",i-> {
+    touch("mk",i-> {
         try {
             System.out.println(UserController.getInstance().touch());
             return true;
@@ -51,7 +54,7 @@ public enum UserRouterPredicate {
             throw new RuntimeException(e);
         }
     }),
-    rm("r",i-> {
+    rm("rm",i-> {
         try {
             System.out.println(UserController.getInstance().rm());
             return true;
@@ -59,15 +62,18 @@ public enum UserRouterPredicate {
             throw new RuntimeException(e);
         }
     }),
-    cat("l",i-> {
+    cat("ls-a",i-> {
         try {
             System.out.println(UserController.getInstance().cat());
             return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    })
-    ;
+    }),
+    cp("ch-pw",i-> {
+        System.out.println(UserController.getInstance().updatePassword(i));
+        return true;
+    });
     private final String num;
     private final Function<Scanner, Boolean> function;
 
@@ -76,11 +82,12 @@ public enum UserRouterPredicate {
         this.function = predicate;
     }
     public static boolean getOperator(Scanner sc) throws SQLException {
-        System.out.println(MenuController.munu("menus","item"));;
-        String a=sc.next();
-            return Arrays.stream(values())
-                    .filter(i -> i.num.equals(a))
-                    .findAny().orElseThrow(() -> new IllegalArgumentException("error"))
-                    .function.apply(sc);
+        System.out.println(MenuController.munu("menus where category='user'","item"));
+        String a = sc.next();
+        return Stream.of(values()).filter(i -> i.num.equals(a))
+                .findAny().orElse(UserRouterPredicate.exit)
+                .function
+                .apply(sc);
     }
 }
+//ch-pw 비밀번호 번경, ls-n:find by name, ls-job:find by job
