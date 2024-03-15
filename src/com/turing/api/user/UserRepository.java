@@ -7,11 +7,12 @@ import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class UserRepository {
     private static final UserRepository instance;
     private PreparedStatement pstmt;
-    private Resultset rs;
+    private ResultSet rs;
     List<String> list;
 
     static {
@@ -29,8 +30,8 @@ public class UserRepository {
                 "jdbc:mysql://localhost:3306/turingdb",
                 "turing",
                 "password");
-        pstmt=null;
-        rs=null;
+        pstmt = null;
+        rs = null;
     }
 
     public static UserRepository getInstance() {
@@ -40,12 +41,13 @@ public class UserRepository {
     public String test() {
         return "UserRepository 연결";
     }
+
     public String count() throws SQLException {
         String sql = "select count(*) from users";
-        PreparedStatement pstmt=connection.prepareStatement(sql);
-        ResultSet rs= pstmt.executeQuery();
-        if(rs.next()){
-            int a= rs.getInt(1);
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            int a = rs.getInt(1);
             return a + "개 입니다.";
         } else {
             return "실패했습니다.";
@@ -71,19 +73,19 @@ public class UserRepository {
         return null;
     }
 
-    public Messenger  save1(User users) throws SQLException {
+    public Messenger save1(User users) throws SQLException {
         String sql = "INSERT INTO users (username, password, name, phone_number, " +
                 " job, height, weight)" +
                 "VALUES (?, ?, ?, ?, ?, ?,?)";
         PreparedStatement pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1,users.getUsername());
-        pstmt.setString(2,users.getPassword());
-        pstmt.setString(3,users.getName());
-        pstmt.setString(4,users.getPhoneNumber());
-        pstmt.setString(5,users.getJob());
-        pstmt.setDouble(6,users.getHeight());
-        pstmt.setDouble(7,users.getWeight());
-        return (pstmt.executeUpdate() == 0) ? Messenger.SUCCESS: Messenger.FAIL;
+        pstmt.setString(1, users.getUsername());
+        pstmt.setString(2, users.getPassword());
+        pstmt.setString(3, users.getName());
+        pstmt.setString(4, users.getPhoneNumber());
+        pstmt.setString(5, users.getJob());
+        pstmt.setDouble(6, users.getHeight());
+        pstmt.setDouble(7, users.getWeight());
+        return (pstmt.executeUpdate() == 0) ? Messenger.SUCCESS : Messenger.FAIL;
     }
 
     public Messenger touch() throws SQLException {
@@ -97,26 +99,26 @@ public class UserRepository {
                 "    height VARCHAR(20),\n" +
                 "    weight VARCHAR(20)\n" +
                 ");";
-        pstmt=connection.prepareStatement(sql);
-        return (pstmt.executeUpdate() == 0) ? Messenger.SUCCESS: Messenger.FAIL;
+        pstmt = connection.prepareStatement(sql);
+        return (pstmt.executeUpdate() == 0) ? Messenger.SUCCESS : Messenger.FAIL;
     }
 
     public Messenger rm() throws SQLException {
         String sql = "DROP TABLE users;";
 
         PreparedStatement pstmt = connection.prepareStatement(sql);
-        return (pstmt.executeUpdate() == 0) ? Messenger.SUCCESS: Messenger.FAIL;
+        return (pstmt.executeUpdate() == 0) ? Messenger.SUCCESS : Messenger.FAIL;
 
     }
 
     public List<?> cat() {
-        List<User> list=new ArrayList<>();
+        List<User> list = new ArrayList<>();
         String sql = "select * from users";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             System.out.println("회원목록");
-            if(rs.next()) {
+            if (rs.next()) {
                 do {
                     list.add(User.builder()
                             .id(rs.getLong("id"))
@@ -126,37 +128,67 @@ public class UserRepository {
                             .job(rs.getString("job"))
                             .build());
                 } while (rs.next());
-            }else{
+            } else {
                 System.out.println("데이터가 없습니다.");
             }
             rs.close();
             pstmt.close();
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println("You have the table");
             return list;
         }
 
         return list;
     }
+
     public Messenger login(User user) throws SQLException {
         String sql = "SELECT username,password FROM users WHERE username = ?";
         pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1,user.getUsername());
+        pstmt.setString(1, user.getUsername());
         ResultSet rs = pstmt.executeQuery();
         return rs.next() ?
                 rs.getString("password").equals(user.getPassword()) ?
                         Messenger.SUCCESS : Messenger.FAIL
                 : Messenger.FAIL;
     }
+
     public String findUsername(String sc) throws SQLException {
         String sql = "SELECT username FROM users WHERE username = ?";
         pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1,sc);
+        pstmt.setString(1, sc);
         ResultSet rs = pstmt.executeQuery();
-        if(rs.next()){
+        if (rs.next()) {
             return "아이디가 있습니다.";
         } else {
             return "아이디가 없습니다.";
         }
+    }
+
+    public String updatePassword(User user) throws SQLException {
+        Scanner sc = new Scanner(System.in);
+
+        String sql = "SELECT username,password FROM users WHERE username = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, user.getUsername());
+        ResultSet rs = pstmt.executeQuery();
+
+        return rs.next() ?
+                rs.getString("password").equals(user.getPassword()) ?
+                        (updatePasswordInDatabase(sc, user) ? "Success" : "Update failed")
+                        : "Passwords do not match"
+                : "User not found";
+    }
+
+    private boolean updatePasswordInDatabase(Scanner sc, User user) throws SQLException {
+        System.out.print("Enter new password: ");
+        String newPassword = sc.nextLine();
+
+        String updateSql = "UPDATE users SET password = ? WHERE username = ?";
+        PreparedStatement updatePstmt = connection.prepareStatement(updateSql);
+        updatePstmt.setString(1, newPassword);
+        updatePstmt.setString(2, user.getUsername());
+        int rowsAffected = updatePstmt.executeUpdate();
+
+        return rowsAffected > 0;
     }
 }

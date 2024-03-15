@@ -11,7 +11,7 @@ import java.util.Scanner;
 public interface UserService {
     String addUsers();
     Messenger login(User user) throws SQLException;
-    String updatePassword(User user);
+    String updatePassword(User user) throws SQLException;
     List<?> findUsersByName(String name);
     Map<String, ?> findUsersByNameFromMap(String name);
     List<?> findUsersByJob(String job);

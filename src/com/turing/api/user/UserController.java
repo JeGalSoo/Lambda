@@ -60,10 +60,9 @@ public class UserController {
         return service.findUsername(scanner.next());
     }
 
-    public String updatePassword(Scanner scanner) {
+    public String updatePassword(Scanner scanner) throws SQLException {
         return service.updatePassword(User.builder()
                 .username(scanner.next())
-                .phoneNumber(scanner.next())
                 .password(scanner.next())
                 .build());
     }

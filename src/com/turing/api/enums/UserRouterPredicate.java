@@ -71,7 +71,11 @@ public enum UserRouterPredicate {
         }
     }),
     cp("ch-pw",i-> {
-        System.out.println(UserController.getInstance().updatePassword(i));
+        try {
+            System.out.println(UserController.getInstance().updatePassword(i));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return true;
     });
     private final String num;

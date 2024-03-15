@@ -60,10 +60,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 //    }
 
     @Override
-    public String updatePassword(User user) {
-        users.get(user.getUsername()).setPassword(user.getPassword());
-
-        return "비번 변경 성공";
+    public String updatePassword(User user) throws SQLException {
+        return ur.updatePassword(user);
     }
 
     @Override
