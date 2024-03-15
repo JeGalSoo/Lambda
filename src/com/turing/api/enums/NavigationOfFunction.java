@@ -2,6 +2,7 @@ package com.turing.api.enums;
 
 import com.turing.api.account.AccountView;
 import com.turing.api.crawler.CrawlerView;
+import com.turing.api.menu.MenuController;
 import com.turing.api.menu.MenuRouter;
 
 import java.io.IOException;
@@ -39,8 +40,17 @@ public enum NavigationOfFunction {
         return "true";
     }),
     crawler("c", i -> {
+        while(!CrawlerRouter.select(i)) {
+        }
+        return "true";
+    }),
+    mk("mk", i -> {
         while(true) {
-            if (!CrawlerRouter.select(i)) break;
+            try {
+                if (!MenuRouter.main()) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             ;
         }
         return "true";
@@ -54,7 +64,8 @@ public enum NavigationOfFunction {
         this.menu = menu;
         this.function = function;
     }
-    public static String select(Scanner sc) {
+    public static String select(Scanner sc) throws SQLException {
+//        System.out.println(MenuController.munu("menus","category"));
         String a = sc.next();
         while (true) {
             return Arrays.stream(values())

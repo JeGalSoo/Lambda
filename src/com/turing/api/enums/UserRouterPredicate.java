@@ -11,7 +11,7 @@ public enum UserRouterPredicate {
     exit("e",i-> {
         return false;
     }),
-    find_id("f",i-> {
+    find_id("fi",i-> {
         try {
             System.out.println(UserController.getInstance().findUsername(i));
         } catch (SQLException e) {
@@ -19,7 +19,7 @@ public enum UserRouterPredicate {
         }
         return true;
     }),
-    count("q",i-> {
+    count("co",i-> {
         try {
             System.out.println(UserController.getInstance().count());
         } catch (SQLException e) {
@@ -27,7 +27,7 @@ public enum UserRouterPredicate {
         }
         return true;
     }),
-    save("s",i-> {
+    save("sa",i-> {
         try {
             System.out.println(UserController.getInstance().save1(i));
             return true;
@@ -35,7 +35,7 @@ public enum UserRouterPredicate {
             throw new RuntimeException(e);
         }
     }),
-    login("l",i-> {
+    login("lo",i-> {
         try {
             System.out.println(UserController.getInstance().login(i));
         } catch (SQLException e) {
@@ -59,7 +59,7 @@ public enum UserRouterPredicate {
             throw new RuntimeException(e);
         }
     }),
-    cat("c",i-> {
+    cat("l",i-> {
         try {
             System.out.println(UserController.getInstance().cat());
             return true;
@@ -76,7 +76,7 @@ public enum UserRouterPredicate {
         this.function = predicate;
     }
     public static boolean getOperator(Scanner sc) throws SQLException {
-        System.out.println(MenuController.munu("menus"));;
+        System.out.println(MenuController.munu("menus","item"));;
         String a=sc.next();
             return Arrays.stream(values())
                     .filter(i -> i.num.equals(a))

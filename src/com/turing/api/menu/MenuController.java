@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public class MenuController {
     private static MenuController instance = new MenuController();
-   static MenuServiceImpl ms;
+   static MenuService ms;
 
     private MenuController(){
         ms=MenuServiceImpl.getInstance();
@@ -13,9 +13,19 @@ public class MenuController {
     public static MenuController getInstance() {
         return instance;
     }
-    public static String munu(String sc) throws SQLException {
-        return MenuServiceImpl.menu(Menu.builder()
-                        .category(sc)
+    public static String munu(String sc,String sc2) throws SQLException {
+        return ms.menu(Menu.builder()
+                        .item(sc2)//컬럼
+                        .category(sc) //테이블
                 .build());
+    }
+
+    public static boolean insertMenus() throws SQLException {
+        ms.insertMenus();
+        return false;
+    }
+
+    public static void makeMenus() throws SQLException {
+        ms.makeMenus();
     }
 }

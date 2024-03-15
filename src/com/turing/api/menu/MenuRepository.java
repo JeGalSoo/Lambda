@@ -39,20 +39,33 @@ public class MenuRepository {
     }
 
     public String menu(Menu menu) throws SQLException {
-        List<Menu> list = new ArrayList<>();
-        String sql = "select *, category from " + menu.getCategory();
+        String sql = "select distinct " + menu.getItem()+" from " + menu.getCategory();
         PreparedStatement pstmt = connection.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
         String categorym="";
         if (rs.next()) {
             do {
 
-                        categorym+=rs.getString("item")+"\t";
+                        categorym+=rs.getString(menu.getItem())+"\n";
             } while (rs.next());
         } else {
             System.out.println("데이터 없음");
         }
         pstmt.close();
         return categorym;
+    }
+
+    public void insertMenu(Menu build) throws SQLException {
+        String sql = "insert into menus (category,item) values (?,?)";
+        PreparedStatement pstmt=connection.prepareStatement(sql);
+        pstmt.setString(1,build.getCategory());
+        pstmt.setString(2,build.getItem());
+        pstmt.executeUpdate();
+    }
+
+    public void makeMenu() throws SQLException {
+        String sql="create table menus(id INT AUTO_INCREMENT PRIMARY KEY, category varchar(20), item varchar(20));";
+        pstmt=connection.prepareStatement(sql);
+        pstmt.executeUpdate();
     }
 }
