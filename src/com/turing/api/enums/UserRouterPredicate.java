@@ -18,7 +18,7 @@ public enum UserRouterPredicate {
         try {
             System.out.println(UserController.getInstance().findUsername(i));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
         return true;
     }),
@@ -26,7 +26,7 @@ public enum UserRouterPredicate {
         try {
             System.out.println(UserController.getInstance().findUsersByName(i));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
         return true;
     }),
@@ -34,7 +34,7 @@ public enum UserRouterPredicate {
         try {
             System.out.println(UserController.getInstance().count());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
         return true;
     }),
@@ -43,14 +43,15 @@ public enum UserRouterPredicate {
             System.out.println(UserController.getInstance().save1(i));
             return true;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
+        return true;
     }),
     login("log",i-> {
         try {
             System.out.println(UserController.getInstance().login(i));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
         return true;
     }),
@@ -59,22 +60,24 @@ public enum UserRouterPredicate {
             System.out.println(UserController.getInstance().touch());
             return true;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
+        return true;
     }),
     rm("rm",i-> {
         try {
             System.out.println(UserController.getInstance().rm());
             return true;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
+        return true;
     }),
     cat("ls-a",i-> {
         try {
             System.out.println(UserController.getInstance().findAll());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
         return true;
     }),
@@ -82,7 +85,7 @@ public enum UserRouterPredicate {
         try {
             System.out.println(UserController.getInstance().updatePassword(i));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
         return true;
     });
