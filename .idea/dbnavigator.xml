@@ -6,7 +6,7 @@
   </component>
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -16,10 +16,10 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="ffdfd391-4cf7-42db-b112-e3cf109dfd0d">
-      <console name="Connection" type="STANDARD" schema="turingdb" session="Main"><![CDATA[show tables;]]></console>
+    <connection id="68fa2ea4-8318-45f7-b1b8-7fad4af1f07d">
+      <console name="turing" type="STANDARD" schema="" session="Main" />
     </connection>
-    <connection id="b64f59af-8039-4751-b028-349b413a857a">
+    <connection id="74673d56-afe1-41b7-b39d-9674dc3d5351">
       <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
@@ -30,26 +30,19 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="ffdfd391-4cf7-42db-b112-e3cf109dfd0d" />
-    <connection id="b64f59af-8039-4751-b028-349b413a857a" />
+    <connection id="68fa2ea4-8318-45f7-b1b8-7fad4af1f07d" />
+    <connection id="74673d56-afe1-41b7-b39d-9674dc3d5351" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
-  </component>
-  <component name="DBNavigator.Project.FileConnectionMappingManager">
-    <mapping file-url="file://$PROJECT_DIR$/Lambda-develop-1.2/src/com/turing/api/sql/soccer_test.sql" connection-id="ffdfd391-4cf7-42db-b112-e3cf109dfd0d" session-id="MAIN" current-schema="turingdb" />
-    <mapping file-url="file://$PROJECT_DIR$/Lambda-develop-1.2/src/com/turing/api/sql/soccer.sql" connection-id="ffdfd391-4cf7-42db-b112-e3cf109dfd0d" session-id="MAIN" current-schema="turingdb" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
   </component>
-  <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
-    <recently-used-interfaces />
-  </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="ffdfd391-4cf7-42db-b112-e3cf109dfd0d" active="true" signed="true">
+      <connection id="68fa2ea4-8318-45f7-b1b8-7fad4af1f07d" active="true" signed="true">
         <database>
           <name value="turing" />
           <description value="" />
@@ -143,7 +136,7 @@
           <object-name-filters />
         </object-filters>
       </connection>
-      <connection id="b64f59af-8039-4751-b028-349b413a857a" active="true" signed="true">
+      <connection id="74673d56-afe1-41b7-b39d-9674dc3d5351" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -160,8 +153,8 @@
           <tns-folder value="" />
           <tns-profile value="" />
           <type value="USER_PASSWORD" />
-          <user value="root" />
-          <deprecated-pwd value="cm9vdHJvb3Q=" />
+          <user value="" />
+          <deprecated-pwd value="" />
         </database>
         <properties>
           <auto-commit value="false" />
