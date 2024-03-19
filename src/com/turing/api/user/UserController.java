@@ -3,10 +3,7 @@ package com.turing.api.user;
 import com.turing.api.enums.Messenger;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class UserController {
     private static UserController instance = new UserController();
@@ -19,9 +16,11 @@ public class UserController {
     public Messenger rm() throws SQLException {
         return service.rm();
     }
+    Map<Integer,User> map;
     UserService service;
 
     public UserController() {
+        this.map=new HashMap<>();
         this.service = UserServiceImpl.getInstance();
     }
     public String test(){return service.test();}
@@ -45,7 +44,7 @@ public class UserController {
                 .build());
     }
 
-    public List<User> findAll() {
+    public List<User> findAll() throws SQLException {
         return service.findAll();
     }
 
@@ -78,20 +77,20 @@ public class UserController {
         return service.existsById(Long.parseLong(scanner.next()));
     }
 
-    public List<?> findUsersByName(Scanner scanner) {
+    public List<?> findUsersByName(Scanner scanner) throws SQLException {
         return service.findUsersByName(scanner.next());
     }
 
     public Map<String, ?> findUsersByNameFromMap(Scanner scanner) {
-        return service.findUsersByNameFromMap(scanner.next());
+        return   service.findUsersByNameFromMap(scanner.next());
     }
 
     public List<?> findUsersByJob(Scanner scanner) {
-        return service.findUsersByJob(scanner.next());
+        return null;
     }
 
-    public Map<String, ?> findUsersByJobFromMap(Scanner scanner) {
-        return service.findUsersByJobFromMap(scanner.next());
+    public Map<String, User> findUsersByJobFromMap(Scanner sc) throws SQLException {
+        return service.findUsersByJobFromMap(sc.next());
     }
 
     public String count() throws SQLException {

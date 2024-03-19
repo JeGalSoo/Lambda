@@ -34,8 +34,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Override
-    public List<User> findAll() {
-        return  new ArrayList<>(users.values());
+    public List<User> findAll() throws SQLException {
+        return  ur.cat();
     }
 
     @Override
@@ -83,12 +83,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
 
     @Override
-    public List<?> findUsersByName(String name) {
-        return users
-                .values()
-                .stream()
-                .filter(i -> i.getName().equals(name))
-                .collect(Collectors.toList());
+    public List<?> findUsersByName(String name) throws SQLException {
+        return ur.findByName(name);
     }
 
     @Override
@@ -103,26 +99,14 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Override
-    public List<?> findUsersByJob(String job) {
-        System.out.println("findUsersByJob 파라미터 : "+job);
-        users
-                .values()
-                .stream().forEach(i->System.out.println("직업 :"+i.getJob()));
-        return users
-                .values()
-                .stream()
-                .filter(i -> i.getJob().equals(job))
-                .collect(Collectors.toList());
+    public List<?> findUsersByJob(String job) throws SQLException {
+        System.out.println("findUsersByJob  : "+job);
+        return null;
     }
 
     @Override
-    public Map<String, ?> findUsersByJobFromMap(String job) {
-        return users
-                .entrySet()
-                .stream()
-                .filter(i -> i.getKey().equals(job))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-                ;
+    public Map<String, User> findUsersByJobFromMap(String job) throws SQLException {
+        return ur.findByJob(job);
     }
 
     @Override
@@ -166,7 +150,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Override
-    public List<?> cat() {
+    public List<?> cat() throws SQLException {
         return ur.cat();
     }
 

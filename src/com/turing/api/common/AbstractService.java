@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public abstract class AbstractService<T> {
     public abstract Messenger save(T t);
-    public abstract List<T> findAll();
+    public abstract List<T> findAll() throws SQLException;
     public abstract Optional<T> findById(Long id);
     public abstract String count() throws SQLException;
     public abstract Optional<T> getOne(String id);

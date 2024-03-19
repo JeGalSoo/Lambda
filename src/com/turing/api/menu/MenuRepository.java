@@ -64,7 +64,8 @@ public class MenuRepository {
     }
 
     public void makeMenu() throws SQLException {
-        String sql="create table menus(id INT AUTO_INCREMENT PRIMARY KEY, category varchar(20), item varchar(20));";
+        String sql="create table menus(id INT AUTO_INCREMENT PRIMARY KEY, " +
+                "category varchar(20), item varchar(20));";
         pstmt=connection.prepareStatement(sql);
         pstmt.executeUpdate();
     }

@@ -18,6 +18,14 @@ public enum UserRouterPredicate {
         try {
             System.out.println(UserController.getInstance().findUsername(i));
         } catch (SQLException e) {
+            System.out.println("wrong");
+        }
+        return true;
+    }),
+    find_by_name("ls-n",i->{
+        try {
+            System.out.println(UserController.getInstance().findUsersByName(i));
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return true;
@@ -26,7 +34,7 @@ public enum UserRouterPredicate {
         try {
             System.out.println(UserController.getInstance().count());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
         return true;
     }),
@@ -35,14 +43,15 @@ public enum UserRouterPredicate {
             System.out.println(UserController.getInstance().save1(i));
             return true;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
+        return true;
     }),
     login("log",i-> {
         try {
             System.out.println(UserController.getInstance().login(i));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
         return true;
     }),
@@ -51,30 +60,40 @@ public enum UserRouterPredicate {
             System.out.println(UserController.getInstance().touch());
             return true;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
+        return true;
     }),
     rm("rm",i-> {
         try {
             System.out.println(UserController.getInstance().rm());
             return true;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
+        return true;
     }),
     cat("ls-a",i-> {
         try {
-            System.out.println(UserController.getInstance().cat());
-            return true;
+            System.out.println(UserController.getInstance().findAll());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return true;
+    }),
+    find_by_job("ls-job",i-> {
+        try {
+            System.out.println(UserController.getInstance().findUsersByJobFromMap(i));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
     }),
     cp("ch-pw",i-> {
         try {
             System.out.println(UserController.getInstance().updatePassword(i));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("wrong");
         }
         return true;
     });
@@ -94,4 +113,3 @@ public enum UserRouterPredicate {
                 .apply(sc);
     }
 }
-//ch-pw 비밀번호 번경, ls-n:find by name, ls-job:find by job

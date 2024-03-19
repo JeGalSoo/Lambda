@@ -12,10 +12,10 @@ public interface UserService {
     String addUsers();
     Messenger login(User user) throws SQLException;
     String updatePassword(User user) throws SQLException;
-    List<?> findUsersByName(String name);
+    List<?> findUsersByName(String name) throws SQLException;
     Map<String, ?> findUsersByNameFromMap(String name);
-    List<?> findUsersByJob(String job);
-    Map<String, ?> findUsersByJobFromMap(String job);
+    List<?> findUsersByJob(String job) throws SQLException;
+    Map<String, User> findUsersByJobFromMap(String job) throws SQLException;
     Map<String, ?> getUserMap();
     String findUsername(String sc) throws SQLException;
     String test();
@@ -26,11 +26,11 @@ public interface UserService {
 
     Messenger rm() throws SQLException;
 
-    List<?> cat();
+    List<?> cat() throws SQLException;
 
     Messenger save1(User user) throws SQLException;
 
-    List<User> findAll();
+    List<User> findAll() throws SQLException;
 
     String delete(User build);
 

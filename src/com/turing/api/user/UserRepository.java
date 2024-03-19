@@ -4,16 +4,16 @@ import com.mysql.cj.protocol.Resultset;
 import com.turing.api.enums.Messenger;
 
 import javax.swing.*;
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class UserRepository {
     private static final UserRepository instance;
     private PreparedStatement pstmt;
     private ResultSet rs;
-    List<String> list;
+    List<User> list;
+    Map<String,User> map;
 
     static {
         try {
@@ -32,6 +32,8 @@ public class UserRepository {
                 "password");
         pstmt = null;
         rs = null;
+        list=new ArrayList<>();
+        map=new HashMap<>();
     }
 
     public static UserRepository getInstance() {
@@ -111,33 +113,19 @@ public class UserRepository {
 
     }
 
-    public List<?> cat() {
-        List<User> list = new ArrayList<>();
+    public List<User> cat() throws SQLException {
         String sql = "select * from users";
-        try {
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
-            System.out.println("회원목록");
-            if (rs.next()) {
-                do {
-                    list.add(User.builder()
-                            .id(rs.getLong("id"))
-                            .username(rs.getString("username"))
-                            .name(rs.getString("name"))
-                            .phoneNumber(rs.getString("phone_number"))
-                            .job(rs.getString("job"))
-                            .build());
-                } while (rs.next());
-            } else {
-                System.out.println("데이터가 없습니다.");
-            }
-            rs.close();
-            pstmt.close();
-        } catch (Exception e) {
-            System.out.println("You have the table");
-            return list;
+        pstmt = connection.prepareStatement(sql);
+        rs = pstmt.executeQuery();
+        while (rs.next()) {
+            list.add(User.builder()
+                    .id(rs.getLong("id"))
+                    .username(rs.getString("username"))
+                    .name(rs.getString("name"))
+                    .phoneNumber(rs.getString("phone_number"))
+                    .job(rs.getString("job"))
+                    .build());
         }
-
         return list;
     }
 
@@ -183,12 +171,44 @@ public class UserRepository {
         System.out.print("Enter new password: ");
         String newPassword = sc.nextLine();
 
-        String updateSql = "UPDATE users SET password = ? WHERE username = ?";
+        String updateSql = "UPDATE users SET password = ? WHERE name = ?";
         PreparedStatement updatePstmt = connection.prepareStatement(updateSql);
         updatePstmt.setString(1, newPassword);
         updatePstmt.setString(2, user.getUsername());
         int rowsAffected = updatePstmt.executeUpdate();
 
         return rowsAffected > 0;
+    }
+
+    public List<?> findByName(String name) throws SQLException {
+        pstmt=connection.prepareStatement("select * from users where name=?");
+        pstmt.setString(1,name);
+        rs=pstmt.executeQuery();
+        while(rs.next()){
+            list.add(User.builder()
+                    .id(rs.getLong("id"))
+                    .username(rs.getString("username"))
+                    .name(rs.getString("name"))
+                    .phoneNumber(rs.getString("phone_number"))
+                    .job(rs.getString("job"))
+                    .build());
+        }
+        return list;
+    }
+
+    public Map<String, User> findByJob(String job) throws SQLException {
+        pstmt=connection.prepareStatement("select * from users where job=?");
+        pstmt.setString(1,job);
+        rs=pstmt.executeQuery();
+        while (rs.next()) {
+            map.put(rs.getString("id"),User.builder()
+                    .id(rs.getLong("id"))
+                    .username(rs.getString("username"))
+                    .name(rs.getString("name"))
+                    .phoneNumber(rs.getString("phone_number"))
+                    .job(rs.getString("job"))
+                    .build());
+        }
+        return map;
     }
 }
